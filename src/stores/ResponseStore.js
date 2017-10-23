@@ -29,12 +29,15 @@ class ResponseStore {
     });
   }
 
-  remove(method, path) {
+  remove(method, path, headers) {
     const responseToRemoveMethod = method.toUpperCase();
     this.state = Object.assign({}, this.state, {
-      [responseToRemoveMethod]: this.state[responseToRemoveMethod].filter(
-        response => response.path !== path
-      )
+      [responseToRemoveMethod]: this.state[responseToRemoveMethod].filter(response => {
+        return (
+          response.path !== path &&
+          !(response.conditionalHeaders && deepEqual(headers, response.conditionalHeaders))
+        );
+      })
     });
   }
 

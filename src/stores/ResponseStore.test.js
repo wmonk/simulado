@@ -198,6 +198,26 @@ describe('src/stores/response', () => {
           POST: []
         });
       });
+
+      it('removes a response under a specific method using headers', () => {
+        const responseToKeep = { method: 'post', path: '/keepMe' };
+        const responseToRemove = {
+          method: 'post',
+          path: '/deleteMe',
+          conditionalHeaders: { 'some-header': 'aValue' }
+        };
+        const initialState = { POST: [responseToKeep, responseToRemove] };
+        const { responseStoreInstance } = setup({ initialState });
+
+        responseStoreInstance.remove(
+          responseToRemove.method,
+          responseToRemove.path,
+          responseToRemove.conditionalHeaders
+        );
+        expect(responseStoreInstance.state).to.deep.equal({
+          POST: [responseToKeep]
+        });
+      });
     });
 
     describe('match()', () => {
