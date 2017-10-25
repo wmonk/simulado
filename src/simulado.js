@@ -79,7 +79,12 @@ const clearRequest = (method, path) => {
 
 const clearRequests = () => {
   console.log('clearRequests')
-  return axios.delete(`http://localhost:${getPortNumber()}/simulado/requests`).then(() => true);
+  return axios.delete(`http://localhost:${getPortNumber()}/simulado/requests`).then(() => {
+    console.log('success')
+    return true
+  }).catch((e) => {
+    console.log('clearRequests', e)
+  });
 };
 
 module.exports = {
