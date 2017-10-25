@@ -25,40 +25,47 @@ app.get('/', (req, res) => {
 });
 
 app.get('/simulado/requests', (req, res) => {
+  console.log('GET - /simulado/requests')
   const { method, path, limit } = req.query;
   const requests = requestStore.get(method, path, limit);
   res.status(200).send(requests);
 });
 
 app.post('/simulado/response', (req, res) => {
+  console.log('POST - /simulado/response')
   const responseToMock = req.body;
   responseStore.add(responseToMock);
   res.sendStatus(201);
 });
 
 app.delete('/simulado/response', (req, res) => {
+  console.log('DELETE - /simulado/response')
   const { method, path } = req.query;
   responseStore.remove(method, path);
   res.sendStatus(201);
 });
 
 app.delete('/simulado/responses', (req, res) => {
+  console.log('DELETE - /simulado/responses')
   responseStore.removeAll();
   res.sendStatus(201);
 });
 
 app.delete('/simulado/request', (req, res) => {
+  console.log('DELETE - /simulado/request')
   const { method, path } = req.query;
   requestStore.remove(method, path);
   res.sendStatus(201);
 });
 
 app.delete('/simulado/requests', (req, res) => {
+  console.log('DELETE - /simulado/requests')
   requestStore.removeAll();
   res.sendStatus(201);
 });
 
 app.all('*', (req, res) => {
+  console.log(`${req.method.toUpperCase()} - ${req.url}`)
   const matchedResponse = responseStore.match(req.method, req.url, req.headers, req.body);
 
   if (matchedResponse) {

@@ -2,11 +2,13 @@ const axios = require('axios');
 const PortStore = require('./stores/PortStore');
 
 const getPortNumber = () => {
+  console.log('getPortNumber')
   const portStoreInstance = new PortStore();
   return portStoreInstance.getState().port;
 };
 
 const addMock = responseToMock => {
+  console.log('addMock')
   const { path } = responseToMock;
 
   return axios
@@ -22,10 +24,12 @@ const addMock = responseToMock => {
 };
 
 const addMocks = async responsesToMock => {
+  console.log('addMocks')
   return await Promise.all(responsesToMock.map(addMock));
 };
 
 const setDefaults = async responsesToMock => {
+  console.log('setDefaults')
   await clearRequests();
   await clearResponses();
 
@@ -33,6 +37,7 @@ const setDefaults = async responsesToMock => {
 };
 
 const lastRequests = (method, path, limit) => {
+  console.log('lastRequests')
   return axios
     .get(
       `http://localhost:${getPortNumber()}/simulado/requests?method=${method.toUpperCase()}&path=${path}${limit
@@ -44,11 +49,13 @@ const lastRequests = (method, path, limit) => {
 };
 
 const lastRequest = async (method, path) => {
+  console.log('lastRequest')
   const lastRequest = await lastRequests(method, path, 1);
   return lastRequest[0];
 };
 
 const clearResponse = (method, path) => {
+  console.log('clearResponse')
   return axios
     .delete(
       `http://localhost:${getPortNumber()}/simulado/response?method=${method.toUpperCase()}&path=${path}`
@@ -57,10 +64,12 @@ const clearResponse = (method, path) => {
 };
 
 const clearResponses = () => {
+  console.log('clearResponses')
   return axios.delete(`http://localhost:${getPortNumber()}/simulado/responses`).then(() => true);
 };
 
 const clearRequest = (method, path) => {
+  console.log('clearRequest')
   return axios
     .delete(
       `http://localhost:${getPortNumber()}/simulado/request?method=${method.toUpperCase()}&path=${path}`
@@ -69,6 +78,7 @@ const clearRequest = (method, path) => {
 };
 
 const clearRequests = () => {
+  console.log('clearRequests')
   return axios.delete(`http://localhost:${getPortNumber()}/simulado/requests`).then(() => true);
 };
 
