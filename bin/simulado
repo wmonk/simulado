@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+process.env.NODE_ENV = 'production';
+
 const fs = require('fs');
 const Simulado = require('../src');
 const commands = require('commander');
