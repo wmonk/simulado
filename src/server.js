@@ -13,6 +13,10 @@ const app = express();
 const responseStore = new ResponseStore();
 const requestStore = new RequestStore();
 
+app.use((req, res, next) => {
+    console.log(`[${Date.now()}] ${req.headers.requestId} - ${req.method} - ${req.url}`)
+    next()
+})
 app.use(cors());
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use('/simulado/public', express.static(`${__dirname}/../public`));

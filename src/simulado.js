@@ -16,7 +16,7 @@ const addMock = responseToMock => {
         path: path.toString(),
         isRegexPath: typeof path === 'object'
       }),
-      { headers: { 'Content-Type': 'application/json' } }
+      { headers: { 'Content-Type': 'application/json', requestId: Date.now() } }
     )
     .then(() => true);
 };
@@ -38,7 +38,7 @@ const lastRequests = (method, path, limit) => {
       `http://localhost:${getPortNumber()}/simulado/requests?method=${method.toUpperCase()}&path=${path}${limit
         ? `&limit=${limit}`
         : ''}`,
-      { headers: { 'Content-Type': 'application/json' } }
+      { headers: { 'Content-Type': 'application/json', requestId: Date.now() } }
     )
     .then(response => response.data);
 };
