@@ -1,5 +1,8 @@
 process.on('exit', code =>  console.error(`Process exiting on ${code}`))
-process.on('uncaughtException', console.error)
+process.on('uncaughtException', err => {
+    console.error('Something really bad happened:')
+    console.err(err)
+})
 
 const { start, stop } = require('./server');
 const {
